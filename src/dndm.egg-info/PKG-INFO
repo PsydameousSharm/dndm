@@ -1,11 +1,13 @@
 Metadata-Version: 2.4
 Name: dndm
-Version: 0.1.1
+Version: 0.1.2
 Summary: A Dungeons and Dragons CLI tool
 Author: Ophelia Van Wye
 License: MIT
 Description-Content-Type: text/markdown
+License-File: LICENSE
 Requires-Dist: click
+Dynamic: license-file
 
 This is a very early release of list of dnd tools.
 These are the following commands:

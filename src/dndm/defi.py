@@ -323,7 +323,11 @@ def selector(name_list):
             inp = inp.lower()
             inp_spli=inp.split()
             if inp_spli[0] == "select":
-                return inp_spli[1]
+                answer = globals().get(inp_spli[1],"Not found")
+                if (answer != "Not found"):
+                    return answer
+                else:
+                    print(answer)
             elif inp_spli[0] == "info":
                 print("-----"+inp_spli[1]+"-------")
                 print(globals().get(inp_spli[1],"Not found"))
@@ -341,40 +345,28 @@ def subrace(race):
             return selector(halfling_list)
     else:
         return race
+def point_rep(name,points):
+    while 1:
+        val = input("Points for "+name+": ")
+        val = int(val)
+        if((points - val) >= 0 and val >= 0):
+            points = points-val
+            print("Points left: "+str(points))
+            val = val + 8
+            break
+        else:
+            print("Choose a proper value")
+    return val, points
 def point_chooser():
     print("You have 5 abilities and 27 points. You will have to choose how to spend them")
     print("Each ability starts at 8, with a -1 modifier. To increase your modifier by 1, you must spend 2 points")
     points=27
-    stg=input("Points for Strength: ")
-    stg = int(stg)
-    points=points-stg
-    print("Points left: " + str(points))
-    stg = stg + 8
-    dex=input("Points for Dexterity: ")
-    dex = int(dex)
-    points=points-dex
-    print("Points left: " + str(points))
-    dex = dex + 8
-    con=input("Points for Constitution: ")
-    con = int(con)
-    points=points-con
-    print("Points left: " + str(points))
-    con = con + 8
-    inl=input("Points for Intelligence: ")
-    inl = int(inl)
-    points=points-inl
-    print("Points left: " + str(points))
-    inl = inl + 8
-    wis=input("Points for Wisdom: ")
-    wis = int(wis)
-    points=points-wis
-    print("Points left: " + str(points))
-    wis= wis + 8
-    cha=input("Points for Charisma: ")
-    cha = int(cha)
-    points=points-cha
-    print("Points left: " + str(points))
-    cha = cha + 8
+    stg, points=point_rep("strength",points)
+    dex, points=point_rep("dexterity",points)
+    con, points=point_rep("constitution",points)
+    inl, points=point_rep("intelligence",points)
+    wis, points=point_rep("wisdom",points)
+    cha, points=point_rep("charisma",points)
     return stg,dex,con,inl,wis,cha
 def save_dict_as_txt(data: dict, path: str):
     with open(path, "w") as f:
