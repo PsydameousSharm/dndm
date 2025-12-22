@@ -38,7 +38,7 @@ def fill_sheet(character_data,savepath):
     # Name (Top Left)
     draw.text((130, 135), character_data["name"], font=name_font, fill=text_color)
     # Class (Below Name)
-    draw.text((620, 115), character_data["class"].captalize(), font=sub_font, fill=text_color)
+    draw.text((620, 115), character_data["class"].capitalize(), font=sub_font, fill=text_color)
     draw.text((620, 175), character_data["race"].capitalize(), font=sub_font, fill=text_color)
     draw.text((865, 115), character_data["background"].capitalize(), font=sub_font, fill=text_color)
     draw.text((865, 175), character_data["alignment"].capitalize(), font=sub_font, fill=text_color)

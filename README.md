@@ -15,3 +15,11 @@ Please note that the chr command will walk you through the character setup.
 ##INSTALL##
 Please install via pip:
 pip install dndm
+
+## macOS Install Notes
+
+If `pip install dndm` succeeds but `dndm` is not found:
+
+```bash
+echo 'export PATH="$HOME/Library/Python/3.9/bin:$PATH"' >> ~/.zshrc
+source ~/.zshrc
