@@ -3,7 +3,8 @@ import sys, click, random, json
 import os
 from . import __version__
 from .defi import *
-
+from importlib.resources import files
+from .dnd_sheet_generator import *
 CONFIG_PATH = os.path.expanduser("~/.config/dndm/config.json")
 def load_config():
     if os.path.exists(CONFIG_PATH):
@@ -35,7 +36,20 @@ def roll(dice_number, repeat):
     while (r >=0):
         click.echo(random.randint(1,d))
         r = r-1
-
+@main.command()
+@click.argument("name")
+def regen(name):
+    """Regenerates the completed pdf with the given character. Usage: regen <name>"""
+    name = name.strip()
+    path = config["save_dir"]+"/"+ str(name)+".txt"
+    if os.path.exists(path):
+        character = load_txt_as_dict(path)
+        save_path = os.path.join(config["save_dir"],name)
+        save_path = save_path+"_sheet.pdf"
+        fill_sheet(character,save_path)
+    else:
+        print(f"File: {path} not found")
+        
 @main.command()
 @click.argument("path")
 def svc(path):
@@ -54,11 +68,11 @@ def chr():
     """Creates a character"""
     character=corechr()
     name = "".join((character["name"]).split())
-    print(name)
     save_path = os.path.join(config["save_dir"],name)
+    save_path_pdf= save_path+"_sheet.pdf"
+    fill_sheet(character,save_path_pdf)
     save_path = save_path+".txt"
     save_dict_as_txt(character, save_path)
-    click.echo(f"Saved to {save_path}")
-
+    click.echo(f"Completed at {save_path_pdf}")
 if __name__ == "__main__":
     main()

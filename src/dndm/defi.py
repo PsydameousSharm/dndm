@@ -318,17 +318,17 @@ def selector(name_list):
     for i in name_list:
         print(i)
     while 1:
-        inp = input('Type "select <name>" to choose. Type "info <name>" to get more info: ')
+        inp = input('Type "s <name>" to choose. Type "i <name>" to get more info: ')
         if inp != "":
             inp = inp.lower()
             inp_spli=inp.split()
-            if inp_spli[0] == "select":
-                answer = globals().get(inp_spli[1],"Not found")
-                if (answer != "Not found"):
-                    return answer
+            if inp_spli[0] == "s":
+                choice = inp_spli[1]
+                if choice.capitalize() in name_list or choice.lower() in [n.lower() for n in name_list]:
+                    return choice.lower()
                 else:
-                    print(answer)
-            elif inp_spli[0] == "info":
+                    print("Not found")
+            elif inp_spli[0] == "i":
                 print("-----"+inp_spli[1]+"-------")
                 print(globals().get(inp_spli[1],"Not found"))
                 print("---------------------------")
@@ -336,7 +336,7 @@ def selector(name_list):
             print("Please enter a value")
 def subrace(race):
     race=race.lower()
-    if(race)=="dwarf"or"elf"or"halfling":
+    if race in ("dwarf","elf","halfling"):
         if race == "dwarf":
             return selector(dwarf_list)
         elif race == "elf":
@@ -372,8 +372,19 @@ def save_dict_as_txt(data: dict, path: str):
     with open(path, "w") as f:
         for key, value in data.items():
             f.write(f"{key} = {value}\n")
+def load_txt_as_dict(path:str):
+    dic = {}
+    with open(path, 'r') as file:
+        for line in file:
+            try:
+                key, value = line.strip().split(' = ', 1)
+                dic[key] = value
+            except ValueError:
+                continue
+    return dic
 ##-------chr-functions-------
 def corechr():
+    plrName= input("Your name: ")
     print("--About--")
     name = input("Name: ")
     align = selector(align_list)
@@ -382,7 +393,6 @@ def corechr():
     print(clas)
     print("--Background--")
     bkgn = selector(bg_list)
-    print(bkgn)
     print("--Race--")
     race = selector(race_list)
     race = subrace(race)
@@ -390,6 +400,7 @@ def corechr():
     height = input("Height: ")
     weight = input("Weight: ")
     hair = input("Hair: ")
+    age = input("Age: ")
     eyecolor = input("Eye Color: ")
     skin = input("Skin: ")
     while 1:
@@ -418,9 +429,11 @@ def corechr():
         "dexterity" : dex,
         "constitution" : con,
         "intelligence" : inl,
+        "age":age,
         "wisdom" : wis,
         "charisma" : cha,
-        "starter" : starter
+        "starter" : starter,
+        "player name": plrName
         }
     return character
     
